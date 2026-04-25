@@ -37,8 +37,27 @@ export default function BrowsePage() {
         .select('*')
         .order('created_at', { ascending: false })
 
-      // DB에 데이터 없으면 목업 사용 (초기 오픈 전)
-      setLenders(data && data.length > 0 ? data as LenderProfile[] : MOCK_LENDERS)
+      const normalized = data && data.length > 0
+        ? data.map((d: any) => ({
+            id: d.id,
+            userId: d.user_id,
+            companyName: d.company_name,
+            description: d.description ?? '',
+            licenseNumber: d.license_number,
+            contactPhone: d.contact_phone,
+            contactEmail: d.contact_email,
+            interestRateMin: d.interest_rate_min,
+            interestRateMax: d.interest_rate_max,
+            loanAmountMin: d.loan_amount_min,
+            loanAmountMax: d.loan_amount_max,
+            loanTypes: d.loan_types ?? [],
+            region: d.region ?? [],
+            plan: d.plan,
+            isVerified: d.is_verified,
+            createdAt: d.created_at,
+          }))
+        : MOCK_LENDERS
+      setLenders(normalized as LenderProfile[])
       setLoading(false)
     }
     fetchLenders()
