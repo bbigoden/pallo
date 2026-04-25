@@ -72,7 +72,7 @@ export default function HomePage() {
               </Button>
             </Link>
             <Link href="/browse">
-              <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 h-14 px-8">
+              <Button size="lg" variant="outline" className="bg-transparent border-white/40 text-white hover:bg-white/10 hover:text-white h-14 px-8">
                 업체 둘러보기
               </Button>
             </Link>
