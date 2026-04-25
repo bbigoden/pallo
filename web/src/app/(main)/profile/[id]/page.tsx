@@ -38,7 +38,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
       setLoading(false)
 
       // 조회수 증가
-      await supabase.rpc('increment_view_count', { request_id: id }).catch(() => {})
+      try { await supabase.rpc('increment_view_count', { request_id: id }) } catch {}
     }
     load()
   }, [params, router])
