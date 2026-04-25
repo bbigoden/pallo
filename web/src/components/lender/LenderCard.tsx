@@ -41,7 +41,7 @@ export default function LenderCard({
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-lg font-black text-blue-600">
-            {companyName.charAt(0)}
+            {companyName?.charAt(0) ?? '?'}
           </div>
           <div>
             <div className="flex items-center gap-2">

@@ -41,7 +41,7 @@ export default function BrowsePage() {
         ? data.map((d: any) => ({
             id: d.id,
             userId: d.user_id,
-            companyName: d.company_name,
+            companyName: d.company_name ?? '',
             description: d.description ?? '',
             licenseNumber: d.license_number,
             contactPhone: d.contact_phone,
