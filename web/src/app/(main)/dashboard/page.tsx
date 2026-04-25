@@ -81,7 +81,11 @@ export default function DashboardPage() {
         )}
 
         {myRequests.length > 0 && (
-          <MyRequests requests={myRequests} />
+          <MyRequests requests={myRequests} onClose={async (id) => {
+            const supabase = createClient()
+            await supabase.from('borrower_requests').update({ status: 'closed' }).eq('id', id)
+            setMyRequests(prev => prev.map(r => r.id === id ? { ...r, status: 'closed' } : r))
+          }} />
         )}
 
         <QuickMenu hasLenderProfile={!!lenderProfile} lenderId={lenderProfile?.id} />
@@ -200,7 +204,15 @@ function SetupPrompt() {
   )
 }
 
-function MyRequests({ requests }: { requests: any[] }) {
+function MyRequests({ requests, onClose }: { requests: any[]; onClose: (id: string) => Promise<void> }) {
+  const [closing, setClosing] = useState<string | null>(null)
+
+  async function handleClose(id: string) {
+    setClosing(id)
+    await onClose(id)
+    setClosing(null)
+  }
+
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-5">
       <div className="flex items-center justify-between mb-4">
@@ -221,9 +233,22 @@ function MyRequests({ requests }: { requests: any[] }) {
               <span className="text-xs text-gray-400">{formatRelativeDate(req.created_at)}</span>
             </div>
             <p className="font-medium text-gray-800 text-sm mb-1">{req.title}</p>
-            <div className="flex items-center gap-3 text-xs text-gray-400">
-              <span>{formatAmount(req.desired_amount)}</span>
-              <span className="flex items-center gap-1"><Eye size={11} /> {req.view_count ?? 0}회 조회</span>
+            <div className="flex items-center justify-between mt-2">
+              <div className="flex items-center gap-3 text-xs text-gray-400">
+                <span>{formatAmount(req.desired_amount)}</span>
+                <span className="flex items-center gap-1"><Eye size={11} /> {req.view_count ?? 0}회 조회</span>
+              </div>
+              {req.status === 'active' && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-7 text-xs text-gray-500 border-gray-200 hover:border-red-200 hover:text-red-500"
+                  disabled={closing === req.id}
+                  onClick={() => handleClose(req.id)}
+                >
+                  {closing === req.id ? <Loader2 size={11} className="animate-spin" /> : '마감'}
+                </Button>
+              )}
             </div>
           </div>
         ))}

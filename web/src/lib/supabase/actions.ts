@@ -26,7 +26,7 @@ export async function register(data: {
     },
   })
   if (error) throw new Error(error.message)
-  redirect(data.role === 'lender' ? '/dashboard?welcome=lender' : '/dashboard?welcome=borrower')
+  redirect(data.role === 'lender' ? '/onboarding' : '/dashboard')
 }
 
 export async function logout() {

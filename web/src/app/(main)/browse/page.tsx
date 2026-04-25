@@ -108,7 +108,9 @@ export default function BrowsePage() {
               {activeFilters.length > 0 && <span className="bg-blue-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">{activeFilters.length}</span>}
             </Button>
             <Select value={sort} onValueChange={(v) => v && setSort(v)}>
-              <SelectTrigger className="w-36 h-11"><SelectValue /></SelectTrigger>
+              <SelectTrigger className="w-36 h-11">
+                <span>{SORT_OPTIONS.find(o => o.value === sort)?.label ?? '정렬'}</span>
+              </SelectTrigger>
               <SelectContent>
                 {SORT_OPTIONS.map(o => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}
               </SelectContent>
