@@ -72,9 +72,9 @@ export default function HomePage() {
               </Button>
             </Link>
             <Link href="/browse">
-              <Button size="lg" variant="outline" className="bg-transparent border-white/40 text-white hover:bg-white/10 hover:text-white h-14 px-8">
+              <button className="inline-flex items-center justify-center h-14 px-8 rounded-lg border border-white/40 text-white bg-transparent hover:bg-white/10 transition-colors font-medium text-base">
                 업체 둘러보기
-              </Button>
+              </button>
             </Link>
           </div>
           <p className="mt-6 text-sm text-blue-200">
@@ -173,9 +173,9 @@ export default function HomePage() {
               </Button>
             </Link>
             <Link href="/browse">
-              <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 h-14 px-10">
+              <button className="inline-flex items-center justify-center h-14 px-10 rounded-lg border border-white/40 text-white bg-transparent hover:bg-white/10 transition-colors font-medium text-base">
                 업체 목록 보기
-              </Button>
+              </button>
             </Link>
           </div>
         </div>
