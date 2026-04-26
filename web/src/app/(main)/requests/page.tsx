@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
-import { Eye, MapPin, Clock, ArrowRight, Plus, Loader2 } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
+import { Eye, MapPin, Clock, ArrowRight, Plus, Loader2, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { createClient } from '@/lib/supabase/client'
@@ -14,6 +15,21 @@ const STATUS_COLORS = {
   active: 'bg-green-50 text-green-700 border-green-100',
   closed: 'bg-gray-100 text-gray-500 border-gray-200',
   hidden: 'bg-red-50 text-red-600 border-red-100',
+}
+
+function PostedBanner() {
+  const searchParams = useSearchParams()
+  const posted = searchParams.get('posted') === 'true'
+  if (!posted) return null
+  return (
+    <div className="flex items-center gap-3 bg-green-50 border border-green-100 rounded-2xl px-5 py-4 mb-6">
+      <CheckCircle size={20} className="text-green-500 flex-shrink-0" />
+      <div>
+        <p className="font-semibold text-green-800 text-sm">견적 요청이 등록되었습니다!</p>
+        <p className="text-green-600 text-xs mt-0.5">업체들이 확인하고 직접 연락드릴 거예요.</p>
+      </div>
+    </div>
+  )
 }
 
 export default function RequestsPage() {
@@ -39,6 +55,10 @@ export default function RequestsPage() {
   return (
     <main className="pt-16 min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 py-8">
+        <Suspense fallback={null}>
+          <PostedBanner />
+        </Suspense>
+
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-black text-gray-900">견적 요청 게시판</h1>

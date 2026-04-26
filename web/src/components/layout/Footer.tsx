@@ -26,8 +26,8 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-white mb-3">이용안내</h4>
             <ul className="space-y-2 text-sm">
               <li><Link href="/pricing" className="hover:text-white transition-colors">요금제</Link></li>
-              <li><Link href="/faq" className="hover:text-white transition-colors">자주 묻는 질문</Link></li>
-              <li><Link href="/notice" className="hover:text-white transition-colors">공지사항</Link></li>
+              <li><Link href="/requests" className="hover:text-white transition-colors">견적 게시판</Link></li>
+              <li><Link href="/register?role=lender" className="hover:text-white transition-colors">업체 회원가입</Link></li>
             </ul>
           </div>
 
