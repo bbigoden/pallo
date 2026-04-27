@@ -68,12 +68,14 @@ export type LoanType =
   | 'business'      // 사업자대출
   | 'emergency'     // 긴급소액대출
   | 'refinance'     // 대환대출
+  | 'other'         // 기타
 
 export type CreditScoreRange =
   | 'excellent'     // 900이상
   | 'good'          // 800-899
   | 'fair'          // 700-799
   | 'poor'          // 700미만
+  | 'unknown'       // 모름
 
 export type RequestStatus =
   | 'active'        // 모집중
@@ -104,6 +106,7 @@ export const LOAN_TYPE_LABELS: Record<LoanType, string> = {
   business: '사업자대출',
   emergency: '긴급소액대출',
   refinance: '대환대출',
+  other: '기타',
 }
 
 export const PLAN_LIMITS: Record<PlanType, { products: number; inquiriesPerMonth: number; label: string }> = {

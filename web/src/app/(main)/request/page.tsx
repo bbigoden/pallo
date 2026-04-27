@@ -19,6 +19,7 @@ const CREDIT_OPTIONS: { value: CreditScoreRange; label: string; desc: string }[]
   { value: 'good', label: '800~899점', desc: '우량' },
   { value: 'fair', label: '700~799점', desc: '보통' },
   { value: 'poor', label: '700점 미만', desc: '저신용' },
+  { value: 'unknown', label: '모름', desc: '확인 안됨' },
 ]
 
 const AMOUNT_PRESETS = [1000000, 3000000, 5000000, 10000000, 30000000, 50000000, 100000000]
@@ -47,7 +48,7 @@ export default function RequestPage() {
 
   const step1Valid = form.loanType && form.desiredAmount > 0 && form.desiredPeriodMonths > 0
   const step2Valid = form.region && form.creditScore
-  const step3Valid = form.title.trim().length >= 10 && form.description.trim().length >= 20
+  const step3Valid = form.title.trim().length >= 2 && form.description.trim().length >= 5
 
   async function handleSubmit() {
     setLoading(true)
@@ -160,10 +161,14 @@ export default function RequestPage() {
                   ))}
                 </div>
                 <Input
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   placeholder="직접 입력 (원)"
-                  value={form.desiredAmount || ''}
-                  onChange={e => update('desiredAmount', Number(e.target.value))}
+                  value={form.desiredAmount ? form.desiredAmount.toLocaleString('ko-KR') : ''}
+                  onChange={e => {
+                    const raw = e.target.value.replace(/[^0-9]/g, '')
+                    update('desiredAmount', raw ? Number(raw) : 0)
+                  }}
                 />
               </div>
 
